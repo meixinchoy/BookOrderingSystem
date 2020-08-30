@@ -74,11 +74,45 @@ public class BookDecoratorPatternDemo {
             System.out.print("\nDo You Want To Order Another Book?\n");  // ask if user wants to order another book
             cont = inputValidation.CharValidation();      //user enter input 
         }   //loop back if user wants to order another book
+        
+        System.out.printf("\nTotal Amount due: RM %.2f",cart.getTotalPrice());
+        System.out.println("\nDo you want to pay with card(1) or cash?(2)");
+        int paymentType= inputValidation.IntegerValidation(3);
+        
+        Payment payment;
+        int cardNo=0;
+        double cashReceived=0;
+        
+        if(paymentType==1){
+            System.out.println("");
+            boolean isNotValid = false;
+            String numberStr;
+            int number = -1;
 
-        //cart.showBooks();
-        System.out.println("\n\n");
-        Payment receipt = new Cash(cart, 100);
-        System.out.println(receipt.generateReceipt());
+            do {
+            isNotValid = false;
+            System.out.print("Please enter your card number: ");
+            numberStr = scanner.nextLine().trim();
+            payment = new Card(cart, cardNo); 
+            try {
+                cardNo = Integer.parseInt(numberStr);
+                ((Card)payment).setCardNo(cardNo); 
+                if (!((Card)payment).validateCard()) {
+                    System.out.printf("%s is not a valid card number.\n", numberStr);
+                    isNotValid = true;
+                }
+            } catch (Exception e) {
+                System.out.printf("%s is not a valid card number.\n", numberStr);
+                isNotValid = true;
+            }
+        } while (isNotValid);      
+        }            
+        else{
+            System.out.println("");
+            payment = new Cash(cart, cashReceived);            
+            cashReceived= inputValidation.CashValidation((Cash)payment);          
+        } 
+        System.out.println(payment.generateReceipt());
 
     }
 }

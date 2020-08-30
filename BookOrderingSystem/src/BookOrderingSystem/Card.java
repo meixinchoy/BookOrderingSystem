@@ -10,8 +10,6 @@ package BookOrderingSystem;
  * @author kenne
  */
 public class Card extends Payment{
-    
-    private double cashReceived;
     private int cardNo;
 
     public Card(Cart cart, int CardNo) {
@@ -19,13 +17,17 @@ public class Card extends Payment{
         this.cardNo = cardNo;
     }
 
-    public boolean validateCard(int CardNo) {
+    public void setCardNo(int cardNo) {
+        this.cardNo = cardNo;
+    }
+
+    public boolean validateCard() {
         int check1 = 0, check2 = 0;
         int[] ccNumber = new int[8];
 
         for (int i = 0, j = 10000000; i < ccNumber.length; i++, j /= 10) {
-            ccNumber[i] = CardNo / j;
-            CardNo %= j;
+            ccNumber[i] = cardNo / j;
+            cardNo %= j;
         }
         int checkDigit = ccNumber[7];
 
@@ -47,6 +49,12 @@ public class Card extends Payment{
             //System.out.print("Invalid card");
             return false;
         }
+    }
+    
+        @Override
+    public String generateReceipt(){
+        String cashReceipt= String.format("\n%-29s\n","Paid with Card");
+        return super.generateReceipt()+cashReceipt;
     }
 }
 

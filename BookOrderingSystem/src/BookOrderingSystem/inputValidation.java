@@ -40,6 +40,31 @@ public class inputValidation {
         } while (isNotValid);
         return number;
     }
+    
+        public static double CashValidation(Cash cash) {
+        Scanner scanner = new Scanner(System.in);
+        boolean isNotValid = false;
+        String numberStr;
+        double number = -1;
+        do {
+            isNotValid = false;
+            System.out.println("Please enter cash payment: ");
+            
+            numberStr = scanner.nextLine().trim();
+            try {
+                number = Double.parseDouble(numberStr);
+                cash.setCashReceived(number);  
+                if (cash.insufficientCash()) {
+                    System.out.println("Insufficient Payment.");
+                    isNotValid = true;
+                }
+            } catch (Exception e) {
+                System.out.printf("\"%s\" is not a valid amount.\n", numberStr);
+                isNotValid = true;
+            }
+        } while (isNotValid);
+        return number;
+    }
 
     public static char CharValidation() {
         Scanner scanner = new Scanner(System.in);
