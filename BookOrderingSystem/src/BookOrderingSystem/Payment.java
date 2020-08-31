@@ -23,9 +23,10 @@ public abstract class Payment {
     }
     
     public String generateReceipt(){
-        String receiptHeader=String.format("\n%22s \n%15s %s \n%21s %s\n %6s %27s\n %15s %18s",
+        String receiptHeader=String.format("\n\n%22s \n%15s %s \n%21s %s\n %6s %27s\n %15s %18s",
                                 "Notebooks", "Date: ", LocalDate.now(),
-                                "Invoice No.:",invoicenum, "Item", "Price (RM)", "---------------", "----------");
+                                "Invoice No.:",invoicenum, "Item", "Price (RM)",
+                                "---------------", "----------");
         StringBuilder receipt = new StringBuilder(receiptHeader);
         receipt = receipt.append(cart.showBooks());
         receipt = receipt.append(String.format("%35s\n%29s%6.2f","======","Grand total (RM):",grandtotal()));

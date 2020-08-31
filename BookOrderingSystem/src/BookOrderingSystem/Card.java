@@ -9,19 +9,22 @@ package BookOrderingSystem;
  *
  * @author kenne
  */
-public class Card extends Payment{
-    private int cardNo;
+public class Card extends Payment {
 
-    public Card(Cart cart, int CardNo) {
+    private int cardNo;
+    private int lastThreeDigits;
+
+    public Card(Cart cart) {
         super(cart);
-        this.cardNo = cardNo;
+        //this.cardNo = cardNo;
     }
 
     public void setCardNo(int cardNo) {
         this.cardNo = cardNo;
+        lastThreeDigits = cardNo % 1000;
     }
 
-    public boolean validateCard() {
+    public boolean validCard() {
         int check1 = 0, check2 = 0;
         int[] ccNumber = new int[8];
 
@@ -50,11 +53,10 @@ public class Card extends Payment{
             return false;
         }
     }
-    
-        @Override
-    public String generateReceipt(){
-        String cashReceipt= String.format("\n%-29s\n","Paid with Card");
-        return super.generateReceipt()+cashReceipt;
+
+    @Override
+    public String generateReceipt() {
+        String cashReceipt = String.format("\n%-29s\n", "Paid with Card ending in " + lastThreeDigits);
+        return super.generateReceipt() + cashReceipt;
     }
 }
-
