@@ -11,7 +11,7 @@ package BookOrderingSystem;
  */
 public class AddCalendar extends BookDecorator {
 
-    private final double calendarPrice = 10;
+    private final double calendarPrice = 6;
     private Book book;
 
     public AddCalendar(Book book) {

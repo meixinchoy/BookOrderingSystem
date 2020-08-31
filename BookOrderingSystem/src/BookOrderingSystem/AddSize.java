@@ -11,7 +11,7 @@ package BookOrderingSystem;
  */
 public class AddSize extends BookDecorator {
 
-    private final double largeSizePrice = 10;
+    private final double largeSizePrice = 5;
     private Book book;
     int choice;
 

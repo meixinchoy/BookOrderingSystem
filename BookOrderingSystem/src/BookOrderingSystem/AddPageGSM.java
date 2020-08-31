@@ -12,7 +12,7 @@ package BookOrderingSystem;
 public class AddPageGSM extends BookDecorator {
 
     private Book book;
-    private final double _120GSMPrice = 10;
+    private final double _120GSMPrice = 5;
     int choice;
 
     public AddPageGSM(Book book, int choice) {
@@ -26,7 +26,8 @@ public class AddPageGSM extends BookDecorator {
         if (choice != 1) {
             return (book.getPrice() + _120GSMPrice);
         }
-        return book.getPrice();
+        else
+            return book.getPrice();
     }
 
     @Override

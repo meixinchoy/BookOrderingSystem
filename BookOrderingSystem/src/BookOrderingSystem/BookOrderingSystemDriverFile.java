@@ -11,7 +11,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.Scanner;
 
-public class BookDecoratorPatternDemo {
+public class BookOrderingSystemDriverFile {
 
     public static void main(String[] args) throws IOException {
 
@@ -28,19 +28,19 @@ public class BookDecoratorPatternDemo {
             System.out.println("\n  1. Order New Custom Book");
             System.out.println("  2. View Monthly Purchase History");
             System.out.println("  3. Exit\n");
-            int menuChoice = inputValidation.IntegerValidation(4);
+            int menuChoice = InputValidation.integerValidation(4);
 
             switch (menuChoice) {
                 case 1:
                     char cont = 'y';
                     // array for prompts
-                    String[][] customization = {{"\nSelect Size", "Normal Size (Default [A5]: 148 x 210)", "Large Size [A4] (210 x 297)"},
-                    {"\nSelect Cover Material", "Paperback (Default)", "Hardcover"},
+                    String[][] customization = {{"\nSelect Size", "Normal Size (Default [A5]: 148 x 210)", String.format("%-27s%-20s", "Large Size [A4]:210 x 297","+RM5")},
+                    {"\nSelect Cover Material", "Paperback (Default)", String.format("%-27s%-20s", "Hardcover","+RM8")},
                     {"\nSelect Color of Cover", "Black(Default)", "Blue", "Yellow", "Green", "Pink"},
-                    {"\nSelect Page GSM", "80 GSM (Default)", "120 GSM"},
-                    {"\nSelect Page Style", "Blank (Default)", "Lined", "Grided"},
-                    {"\nDo you Want A Calendar", "No Calendar (Default)", "Add Calendar"},
-                    {"\nDo you Want A Pen Holder", "No Pen Holder (Default)", "Add Pen Holder"}};
+                    {"\nSelect Page GSM", "80 GSM (Default)", String.format("%-27s%-20s", "120 GSM","+RM5")},
+                    {"\nSelect Page Style", "Blank (Default)", String.format("%-27s%-20s", "Lined","+RM2"), String.format("%-27s%-20s", "Grided","+RM3")},
+                    {"\nDo you Want A Calendar", "No Calendar (Default)", String.format("%-27s%-20s", "Add Calendar","+RM6")},
+                    {"\nDo you Want A Pen Holder", "No Pen Holder (Default)", String.format("%-27s%-20s", "Add Pen Holder","+RM10")}};
                     int[] choices = new int[customization.length]; // array for storing user's choices
                     Cart cart = new Cart(); // cart to store books to be purchased
 
@@ -50,6 +50,7 @@ public class BookDecoratorPatternDemo {
                     while (cont == 'y') {
                         char confirmSelection = 'n';
                         while (confirmSelection == 'n') {
+                            System.out.println("the Basic Book is RM15");
                             for (int i = 0; i < choices.length; i++) { // loop each customization available
                                 for (int j = 0; j < customization[i].length; j++) { // loop each prompt for each customization option
                                     if (j != 0) {
@@ -57,14 +58,14 @@ public class BookDecoratorPatternDemo {
                                     }
                                     System.out.println(customization[i][j]); // output choices
                                 }
-                                choices[i] = inputValidation.IntegerValidation(customization[i].length); //let user to enter selection
+                                choices[i] = InputValidation.integerValidation(customization[i].length); //let user to enter selection
                             }
-                            System.out.println("\nBasic Book ");
+                            System.out.printf("\n\n%-27s%-20s\n","Basic Book", " RM15");
                             for (int i = 0; i < choices.length; i++) {
                                 System.out.println("-" + customization[i][choices[i]]); //displays user's selections
                             }
                             System.out.print("\nConfirm Customisation?\n");
-                            confirmSelection = inputValidation.CharValidation(); //Let user confirm customization
+                            confirmSelection = InputValidation.charValidation(); //Let user confirm customization
                         }                                                        //reloop if not confirmed
 
                         Book book = new BasicBook();        //create BasicBook object
@@ -101,26 +102,26 @@ public class BookDecoratorPatternDemo {
                         }
 
                         System.out.print("\nDo You Want To Order Another Book?\n");  // ask if user wants to order another book
-                        cont = inputValidation.CharValidation();      //user enter input
+                        cont = InputValidation.charValidation();      //user enter input
                     }   //loop back if user wants to order another book
                     //displays total amount to be paid and prompts for user's choice of payment method
                     System.out.printf("\nTotal Amount due: RM %.2f", cart.getTotalPrice());
                     System.out.println("\nDo you want to pay with card(1) or cash?(2)");
-                    int paymentType = inputValidation.IntegerValidation(3);
+                    int paymentType = InputValidation.integerValidation(3);
                     Payment payment;    //variable for holding user's payment details
                     if (paymentType == 1) { //Pay by Card
                         System.out.println("");
                         payment = new Card(cart);
-                        inputValidation.CardValidation((Card) payment);
+                        InputValidation.cardValidation((Card) payment);
                     } else {//Pay by Cash
                         System.out.println("");
                         payment = new Cash(cart);
-                        inputValidation.CashValidation((Cash) payment);
+                        InputValidation.cashValidation((Cash) payment);
                     }
 
                     System.out.println(payment.generateReceipt());
                     System.out.println("Return to Main Menu To Continue Browsing?");
-                    nextPurchase = inputValidation.CharValidation();
+                    nextPurchase = InputValidation.charValidation();
                     if (nextPurchase == 'y') {
                         System.out.println("\n\n\n");
                     }

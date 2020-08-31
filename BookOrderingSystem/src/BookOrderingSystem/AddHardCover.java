@@ -12,7 +12,7 @@ package BookOrderingSystem;
 public class AddHardCover extends BookDecorator {
 
     private Book book;
-    private final double hardCoverPrice = 10;
+    private final double hardCoverPrice = 8;
     int choice;
 
     public AddHardCover(Book book, int choice) {
@@ -24,9 +24,9 @@ public class AddHardCover extends BookDecorator {
     @Override
     public double getPrice() {
         if (choice != 1) {
-            return (book.getPrice() + 10);
+            return (book.getPrice() + hardCoverPrice);
         }
-        return book.getPrice();
+            return book.getPrice();
     }
 
     @Override
